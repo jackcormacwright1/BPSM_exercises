@@ -1,0 +1,21 @@
+# R session files
+.Rhistory
+.RData
+Rplots.pdf
+
+# Vim temporary files
+*.swp
+*~
+
+# macOS metadata
+.DS_Store
+
+
+# specific files
+scratch.txt
+
+
+
+
+
+

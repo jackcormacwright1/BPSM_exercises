@@ -1,0 +1,94 @@
+Q1 How many people are there?
+
+awk 'NR > 1 && length($0) > 0 {count++} END {print count+0}' example_people_data.tsv
+tail -n +2 example_people_data.tsv | grep -c .
+awk -F'\t' '{if (NR > 1 && NF > 0) {count++}} END {print count}' example_people_data.tsv
+
+
+100
+
+Q2 How many people are aged around 30 or older?
+
+awk -F'\t' 'NR > 1 && NF > 0 && $6 <= (2026-30) {count++} END {print count}' example_people_data.tsv
+awk -F'\t' '{if (NR > 1 && NF > 0 && $6 <= (2026-30)) {count++}} END {print count}' example_people_data.tsv
+
+91
+
+awk -F '\t' '
+NR > 1 && NF > 0 {
+dob = $6 * 10000 + $5 * 100 + $4
+if (dob <= 19961001) {
+count++
+}
+}
+END {print count+0}
+' example_people_data.tsv
+
+91
+
+Q3 How many people are called Jan?
+
+awk -F'\t' 'NR > 1 && $1 == "Jan" {count++} END {print count}' example_people_data.tsv
+
+1
+
+Q4 What is the most common country of birth, and of the people from this country, how many are around 50 or older?
+
+awk -F'\t' '{print $7}' example_people_data.tsv | sort | uniq -c | sort -nr
+awk -F'\t' '{ if ($7 == "Mozambique" && $6 <= (2026-50)) { count++ } } END { print count }' example_people_data.tsv
+
+awk -F '\t' '
+> NR > 1 && NF > 0{
+> count[$7]++
+> if (count[$7] > max) {
+> max = count[$7]
+> top = $7
+> }
+> }
+> END {print top}
+> ' example_people_data.tsv |
+> awk -F '\t' '
+> NR == 1 {
+> top = $0
+> next
+> }
+> NR > 2 && $7 == top && $6 <= 1976 {
+> count++
+> }
+> END {print count}
+> ' - example_people_data.tsv
+
+1
+
+Q5 What are the names, in reverse alphabetical order within each country of birth, of the people with "edu" email addresses?
+
+awk -F'\t' 'BEGIN{OFS="\t"} $2 ~ /edu/ {print $1, $2, $7}' example_people_data.tsv  | sort -t$'\t' -k3,3 -k1,1r
+
+.edu only
+awk -F'\t' 'BEGIN{OFS="\t"} $2 ~ /\.edu/ {print $1, $2, $7}' example_people_data.tsv  | sort -t$'\t' -k3,3 -k1,1r
+
+Grace   quis.diam.Pellentesque@ornareIn.edu     Antigua and Barbuda
+Ferdinand       Suspendisse@nulla.edu   Bangladesh
+Prescott        commodo.tincidunt.nibh@lacusvariuset.edu        Bolivia
+Fulton  diam.Proin@acturpis.edu Brunei
+MacKensie       sapien@lacinia.edu      Curaçao
+Barclay ipsum.Suspendisse@tortorInteger.edu     Curaçao
+Hillary Mauris.nulla@Proin.edu  Egypt
+Fitzgerald      ornare.Fusce@scelerisqueduiSuspendisse.net      Egypt
+Moses   Quisque.imperdiet.erat@antelectusconvallis.edu  Finland
+Levi    libero.dui.nec@dolorelitpellentesque.edu        Georgia
+Callum  natoque.penatibus@nisl.edu      Ghana
+Gemma   erat@sedhendrerit.edu   Greenland
+Leilani Maecenas.malesuada@nonummy.edu  Japan
+Julian  semper.cursus.Integer@Sed.edu   Kazakhstan
+Kennedy Suspendisse.non.leo@consequat.edu       Malaysia
+Caryn   scelerisque@vestibulum.edu      Martinique
+Chava   ac.turpis@quisaccumsan.edu      Mozambique
+Cally   tellus.Nunc@Donec.edu   Mozambique
+Genevieve       elementum@ridiculusmus.edu      Puerto Rico
+Jaquelyn        et@magnaaneque.edu      Saint Lucia
+Mia     ligula.Nullam@ligula.edu        South Georgia and The South Sandwich Islands
+Isadora orci@estmollis.edu      Trinidad and Tobago
+Beck    scelerisque@fringilla.edu       Turks and Caicos Islands
+
+

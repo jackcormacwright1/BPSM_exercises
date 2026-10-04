@@ -86,7 +86,7 @@ awk -F'\t' '
 BEGIN {
     OFS = "\t"
 }
-NR > 1 && $2 ~ /edu/ {
+NR > 1 && $2 ~ /\.edu$/ {
     print $1, $2, $7
 }
 ' "$DATA" |

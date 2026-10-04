@@ -79,6 +79,9 @@ echo
 
 echo "Q5: People with edu email addresses, reverse alphabetical order within country"
 
+mkdir -p results
+{
+printf "Name\tEmail\tCountry\n"
 awk -F'\t' '
 BEGIN {
     OFS = "\t"
@@ -87,4 +90,13 @@ NR > 1 && $2 ~ /edu/ {
     print $1, $2, $7
 }
 ' "$DATA" |
-sort -t$'\t' -k3,3 -k1,1r
+sort -t$'\t' -k3,3 -k1,1r 
+} > results/edu_email_addresses_by_country.tsv
+
+echo "$(tail -n +2 results/edu_email_addresses_by_country.tsv | grep -c .) email addresses found"
+
+echo
+echo "Q5 results saved at results/edu_email_addresses_by_country.tsv"
+
+echo
+echo

@@ -15,7 +15,12 @@ Rplots.pdf
 scratch.txt
 
 
-
+# Git generated files
+*.orig
+*_BACKUP_*.md
+*_BASE_*.md
+*_LOCAL_*.md
+*_REMOTE_*.md
 
 
 

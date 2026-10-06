@@ -8,7 +8,7 @@ counter=0
 
 while IFS=$'\t' read -r name email city day month year country
 do
-	counter=$((counter = counter + 1))
+	counter=$((counter + 1))
 	echo "${counter}: ${country}"
 done < "${data_file}"
 

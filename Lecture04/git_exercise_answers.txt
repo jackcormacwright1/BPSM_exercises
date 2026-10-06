@@ -1,0 +1,157 @@
+GIT EXERCISE ANSWERS
+
+SETUP: Create a directory for these exercises and change directory to it.
+
+cd BPSM/BPSM04
+mkdir exercises
+cd exercises
+pwd
+
+# Confirmed directory: /home/s1306053/BPSM/BPSM04/exercises
+
+QUESTION 1: Initialise a Git repository and make a .gitignore.
+
+git init
+vi .gitignore
+
+
+# # Vim temporary files
+# *.swp
+#
+# # specific files
+# scratch.txt
+#
+# The .gitignore was added and committed with the files in question 3.
+
+
+QUESTION 2: Set the local and global parameters you want, using your personal GitHub account.
+
+git config --global user.name "jackcormacwright1"
+git config --global user.email "jackcormacwright@gmail.com"
+git config --global core.editor "vi"
+git config --global color.ui auto
+git config --global push.autoSetupRemote false
+git config --global pull.rebase false
+git config --global alias.st status
+git config --global alias.lo "log --oneline --graph --decorate --all"
+git config --global alias.unstage "restore --staged"
+git config --global --list
+git config --global merge.tool vimdiff
+git config --global credential.helper 'cache --timeout=28800'
+git config --list --show-origin
+
+# no local parameters set
+
+QUESTION 3: Make, add and commit files generated while doing the Linux exercises.
+
+# copy the original answers file and create a markdown file with the questions separately
+cp /home/s1306053/BPSM/BPSM03/answers.txt ./answers_original.txt
+vi questions.md
+
+# stage the files
+git add .gitignore answers_original.txt questions.md
+
+# check what will be committed and commit with a message
+git diff --staged
+git commit -m "Add initial exercise files"
+
+# create a solutions executable and run it
+vi solutions.sh
+chmod +x solutions.sh
+./solutions.sh
+
+# stage and commit
+git add solutions.sh
+git diff --staged
+git commit -m "Add solutions for BPSM03 exercises"
+
+# create a folder for the outputs and edit the executable to output the results to q5
+mkdir results
+vi solutions.sh
+
+# run and check the results
+./solutions.sh
+cat results/edu_email_addresses_by_country.tsv
+
+stage and commit the change
+git add solutions.sh results/edu_email_addresses_by_country.tsv
+git diff --staged
+git commit -m "Write Q5 results to TSV file and output the count instead"
+
+QUESTION 4: Make a branch, create a known conflict, resolve it and merge it back into the main branch.
+
+# Create and commit the initial README on main:
+vi README.md
+git add README.md
+git commit -m "Add repository README"
+
+# Create a branch and edit the README description in vi to:
+# This repository contains completed exercises from the BPSM course lectures 3 and 4.
+git switch -c improve-readme
+vi README.md
+git diff
+git add README.md
+git commit -m "Add more detail to README"
+
+# Switch back to main and edit the same description to:
+# This repository contains code and answers from the BPSM exercises.
+git switch main
+vi README.md
+git add README.md
+git commit -m " Update README description"
+
+# This merge intentionally produced the required conflict in README.md:
+git merge improve-readme
+git status
+cat README.md
+
+# Select the working merge tool and resolve the conflict interactively:
+git config --global merge.tool vimdiff
+git mergetool
+git st
+
+# Remove the temporary files created during this recorded merge session:
+rm README.md.orig README_BACKUP_*.md README_BASE_*.md README_LOCAL_*.md README_REMOTE_*.md
+git commit
+git lo
+
+# Successful merge commit: 92e72e7, Merge branch 'improve-readme'.
+
+
+QUESTION 5: Make a new repository on GitHub, for example BPSM_exercises.
+
+curl -u jackcormacwright1 https://api.github.com/user/repos -d '{"name":"BPSM_exercises"}'
+
+# The response confirmed successful creation:
+# "full_name": "jackcormacwright1/BPSM_exercises"
+# "private": false
+# "visibility": "public"
+# Authentication was entered at the prompt and is not included here.
+
+
+QUESTION 6: Push the repository to GitHub. It does not need to be zipped or encrypted for this exercise.
+
+# You first added origin using SSH. Adding it succeeded, but the SSH push
+# failed, so you then changed the existing remote to HTTPS:
+git remote add origin git@github.com:jackcormacwright1/BPSM_exercises.git
+git remote set-url origin https://github.com/jackcormacwright1/BPSM_exercises.git
+git remote -v
+git push -u origin main
+git push --all origin
+
+# Successful checks after pushing:
+git status
+git remote -v
+git branch -vv
+git lo
+
+# The transcript confirms that main tracked origin/main and was up to date.
+# The fix-q5-email-regex and improve-readme branches were also pushed.
+
+
+QUESTION 7: Tell someone else about the public repository so they can clone it using only the link.
+
+# Link to share:
+# https://github.com/jackcormacwright1/BPSM_exercises
+
+git clone https://github.com/jackcormacwright1/BPSM_exercises.git

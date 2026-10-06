@@ -1,0 +1,2 @@
+Name	Country	Birth_year	Decade
+Cally	Mozambique	1992	1990

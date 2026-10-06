@@ -1,0 +1,2 @@
+Name	Country	Birth_year	Decade
+Veronica	Western Sahara	1974	1970

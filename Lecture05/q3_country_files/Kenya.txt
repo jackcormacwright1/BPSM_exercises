@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Karleigh	congue@auctornuncnulla.co.uk	Aurora	8	3	1958	Kenya

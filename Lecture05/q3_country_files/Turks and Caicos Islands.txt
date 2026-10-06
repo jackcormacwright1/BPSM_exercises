@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Beck	scelerisque@fringilla.edu	Offida	22	4	1992	Turks and Caicos Islands

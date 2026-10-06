@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Jaquelyn	et@magnaaneque.edu	Stirling	1	2	1976	Saint Lucia

@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Kennedy	Suspendisse.non.leo@consequat.edu	Prince George	4	2	1961	Malaysia

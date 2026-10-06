@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Isadora	orci@estmollis.edu	Strausberg	4	10	1964	Trinidad and Tobago

@@ -1,2 +1,3 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Teegan	orci.Phasellus.dapibus@convallis.net	Funtua	18	8	2000	New Caledonia
 Christian	arcu.iaculis.enim@amet.com	Broken Arrow	20	2	1950	New Caledonia

@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Aline	placerat.augue@diamDuis.ca	Bay Roberts	7	8	1956	Saint Pierre and Miquelon

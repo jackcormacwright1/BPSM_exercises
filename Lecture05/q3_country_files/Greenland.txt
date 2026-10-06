@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Gemma	erat@sedhendrerit.edu	Glasgow	2	2	1990	Greenland

@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Dominique	diam@faucibusid.com	Castel Baronia	23	10	1985	Guinea

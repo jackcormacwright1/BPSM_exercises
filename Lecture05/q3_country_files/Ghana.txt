@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Callum	natoque.penatibus@nisl.edu	Labrecque	26	12	1969	Ghana

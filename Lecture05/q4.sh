@@ -5,7 +5,7 @@
 data_file="/home/s1306053/BPSM/BPSM03/example_people_data.tsv"
 output_file="./q4_october_births.txt"
 
-> "${output_file}"
+printf 'Name\tCountry\n' > "${output_file}"
 
 while IFS=$'\t' read -r name email city day month year country
 do
@@ -23,15 +23,14 @@ printf "October births saved to %s\n" "${output_file}"
 
 printf "\nNumber of October births:\n\n"
 
-wc -l < "${output_file}"
-
-sort -t $'\t' -k2,2 -k1,1 "${output_file}"
+tail -n +2 "${output_file}" | wc -l
 
 echo
 
+head -n 1 "${output_file}"
+tail -n +2 "${output_file}" | sort -t $'\t' -k2,2 -k1,1
 
-
-
+echo
 
 
 

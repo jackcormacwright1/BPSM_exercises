@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Meghan	eu.euismod.ac@auctorvelitAliquam.co.uk	Iqaluit	4	1	1974	Fiji

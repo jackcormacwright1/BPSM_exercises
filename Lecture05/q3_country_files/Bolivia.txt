@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Prescott	commodo.tincidunt.nibh@lacusvariuset.edu	Turriaco	2	1	1967	Bolivia

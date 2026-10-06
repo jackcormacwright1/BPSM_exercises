@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Chaney	ac.metus.vitae@Inlorem.net	Guysborough	22	3	1983	Wallis and Futuna

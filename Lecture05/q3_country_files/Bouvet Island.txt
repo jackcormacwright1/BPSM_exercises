@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Idola	amet.ultricies@euismod.ca	Sète	20	12	1973	Bouvet Island

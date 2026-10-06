@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Tucker	risus@dignissim.com	Anchorage	10	3	1974	Guam

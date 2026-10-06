@@ -1,2 +1,3 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Ella	libero@arcuiaculis.com	Aalbeke	8	7	1965	Virgin Islands, British
 Hadley	felis.adipiscing.fringilla@ligulaDonec.com	Nuraminis	27	6	1951	Virgin Islands, British

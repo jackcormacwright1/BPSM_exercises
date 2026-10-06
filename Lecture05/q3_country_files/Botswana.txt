@@ -1,1 +1,2 @@
+Name	Email	City	Birth_day	Birth_month	Birth_year	Country
 Kay	Sed@aliquetPhasellusfermentum.net	Ghlin	19	5	1998	Botswana

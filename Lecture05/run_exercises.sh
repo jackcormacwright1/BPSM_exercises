@@ -20,7 +20,7 @@ done
 # no questions named so run them all -eq checks equal to
 if [[ ${#questions[@]} -eq 0 ]]
 then
-    questions=(q1 q2 q3 q4 q5 q6)
+    questions=(q1 q2 q3 q4 q5 q5_v2 q6)
 fi
  
 for q in "${questions[@]}"
@@ -34,7 +34,7 @@ do
         cat "${script}"
     else
 	# grep -v to remove comments i.e. minus visible
-	# [[:space:]] * # to remove lines with any number of spaces at the start (because of ^) 
+	# [[:space:]] * # to remove lines with any number of spaces at the start before the # (because of ^) 
         tail -n +2 "${script}" | grep -v '^[[:space:]]*#' | cat
     fi
  

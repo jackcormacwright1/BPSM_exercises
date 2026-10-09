@@ -13,15 +13,12 @@ do
 	if [[ ${name} != "name" && ${name} != "" ]]
 	then
         	counter=$((counter + 1))
-        	echo -e "${counter}\tNAME-${name}\tCITY-${city}\tCOUNTRY-${country}"
+        	# %-6s means substitute padded with 6 spaces"
+        	# - means left-aligned
+        	printf '%-6s%-40s%-35s%s\n' "${counter}" "NAME-${name}" "CITY-${city}" "COUNTRY-${country}"
 	fi
 
-#output the result in columns based on tab separated
-done < "${data_file}" | column -t -s $'\t'
-
-
-
-
+done < "${data_file}"
 
 
 

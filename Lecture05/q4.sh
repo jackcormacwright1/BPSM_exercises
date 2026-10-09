@@ -7,6 +7,8 @@ output_file="./q4_october_births.txt"
 
 printf 'Name\tCountry\n' > "${output_file}"
 
+counter=0
+
 while IFS=$'\t' read -r name email city day month year country
 do
         if [[ ${name} != "name" && ${name} != "" ]]
@@ -16,6 +18,7 @@ do
 		then
 			# >> to append to the file at the end not replace the file
 			printf '%s\t%s\n' "${name}" "${country}" >> "${output_file}"
+			counter=$((counter + 1))
 		fi
         fi
 
@@ -24,19 +27,15 @@ done < "${data_file}"
 printf "October births saved to %s\n" "${output_file}"
 
 printf "\nNumber of October births:\n\n"
+printf '%s\n' "${counter}"
 
-# tail -n for number of lines +2 means starting from the second line 
-# (2 would be the first 2 lines only; -2 would be the last 2 lines only)
-# then word count -l lines to get the number of lines i.e. people
-tail -n +2 "${output_file}" | wc -l
-
-# add a blank line for output appearance
 echo
 
-#pint the headers
-head -n 1 "${output_file}"
-#print the rest, sorted by column 2 (country) then 1 (name)
-tail -n +2 "${output_file}" | sort -t $'\t' -k2,2 -k1,1
+# IFS= means do not split the line so the whole line is read into the variable for printing
+while IFS= read -r line
+do
+	printf '%s\n' "${line}"
+done < "${output_file}"
 
 echo
 

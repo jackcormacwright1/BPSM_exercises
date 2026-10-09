@@ -22,6 +22,9 @@ do
     fi
 done
 
+# initialise a variable to count the number of countries
+country_count=0
+
 while IFS=$'\t' read -r name email city day month year country
 do
         if [[ ${name} != "name" && ${name} != "" ]]
@@ -33,6 +36,8 @@ do
 		if [[ ! -s "${output_file}" ]]
 		then
 			printf 'Name\tEmail\tCity\tBirth_day\tBirth_month\tBirth_year\tCountry\n' > "${output_file}"
+			# writing the header means this is a new country so increment the counter
+			country_count=$((country_count + 1))
                 fi
 		#printf is print formatted so will substitute %s for variables called after the string
                 printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "${name}" "${email}" "${city}" "${day}" "${month}" "${year}" "${country}" >> "${output_file}"
@@ -40,16 +45,6 @@ do
 
 done < "${data_file}"
 
-#count the number of files in the output directory for the number of countries
-#single brackets mean a command substitution vs double brackets for arithmetic
-#dollar sign needed to assign the output of the brackets to the variable
-#ls lists the file names one per line
-#-l on the word count counts lines
-country_count=$(ls -1 "${output_dir}" | wc -l)
 printf "%s country files saved to %s" "${country_count}" "${output_dir}"
-
-
-
-
 
 

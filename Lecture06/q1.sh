@@ -10,8 +10,8 @@ counter=0
 while IFS=$'\t' read -r query_accession subject_accession identity_percent alignment_length mismatches gap_opens q_start q_end s_start s_end evalue bit_score
 do
 	if [[ "${subject_accession}" != "" ]] then
-		IFS=$'|' read -ra subject
-		echo "${subject[3]}" <<< "${subject_accession}"
+		IFS=$'|' read -ra subject <<< "${subject_accession}"
+		echo "${subject[3]}"
 	fi
 done < "${data_file}"
 

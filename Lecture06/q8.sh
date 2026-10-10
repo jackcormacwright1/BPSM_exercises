@@ -9,7 +9,7 @@ counter=0
 #file headers:
 #query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
 
-printf "Index\tSubject_Accession\tQuery_Start\tSubject_Start\n"
+printf 'Query\tSubject\tQuery_Start\tQuery_End\tSubject_Start\tSubject_End\tBit_Score\n'
 
 while IFS=$'\t' read -r query_accession subject_accession identity_percent alignment_length mismatches gap_opens q_start q_end s_start s_end evalue bit_score
 do
@@ -17,7 +17,8 @@ do
 		IFS=$'|' read -ra subject <<< "${subject_accession}"
 		if [[ "${subject[3]}" == *"AEI"* ]]; then
 			counter=$((counter + 1))
-			printf "%s\t%s\t%s\t%s\n" ${counter} ${subject[3]} ${q_start} ${s_start}
+		        printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+                            "$query_accession" "${subject[3]}" "$q_start" "$q_end" "$s_start" "$s_end" "$bit_score"
 		fi
 	fi
 done < "${data_file}"

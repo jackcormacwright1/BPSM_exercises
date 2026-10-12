@@ -15,8 +15,11 @@ while IFS=$'\t' read -r query_accession subject_accession identity_percent align
 do
 	if [[ "${subject_accession}" != "" ]]; then
 		IFS=$'|' read -ra subject <<< "${subject_accession}"
+		# AEI with anything on either side of it in the subject accession ID stripped
 		if [[ "${subject[3]}" == *"AEI"* ]]; then
 			counter=$((counter + 1))
+
+			# outputting both start positions as not sure which one is being referred to
 		        printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
                             "$query_accession" "${subject[3]}" "$q_start" "$q_end" "$s_start" "$s_end" "$bit_score"
 		fi

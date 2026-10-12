@@ -8,7 +8,9 @@ printf 'Query_Accession_Number\tSubject_Accession_Number\tMismatches\tAlignment_
 
 while IFS=$'\t' read -r query_accession subject_accession identity_percent alignment_length mismatches gap_opens q_start q_end s_start s_end evalue bit_score
 do
-    if [[ -n "$subject_accession" && "$mismatches" -gt 20 && "$alignment_length" -lt 100 ]]; then
+
+	# -gt for greater than and -lt for less than
+    	if [[ -n "$subject_accession" && "$mismatches" -gt 20 && "$alignment_length" -lt 100 ]]; then
         IFS='|' read -ra subject <<< "$subject_accession"
 
         printf '%s\t%-30s\t%-15s\t%s\n' \

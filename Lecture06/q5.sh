@@ -16,7 +16,7 @@ do
         printf '%s\t%s\t%-30s\t%-15s\t%s\n' \
             "${counter}" "$query_accession" "${subject[3]}" "$mismatches" "$alignment_length"
     
-
+        # check the counter and quit the loop if -eq (equal to ) 20
         if [[ "$counter" -eq 20 ]]; then
             break
         fi   

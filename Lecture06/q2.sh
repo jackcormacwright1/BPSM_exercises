@@ -1,6 +1,8 @@
 #!/bin/bash
 
-data_file="/localdisk/home/s1306053/BPSM/exercises/Lecture06/blastoutput2.out"
+source sourcefile
+
+#list the alignment length and percent ID for all HSPs
 
 counter=0
 

@@ -1,6 +1,8 @@
 #!/bin/bash
 source sourcefile
 
+#what percentage of each HSP is made up of mismatches?
+
 while IFS=$'\t' read -r query_accession subject_accession identity_percent alignment_length mismatches gap_opens q_start q_end s_start s_end evalue bit_score
 do
     [[ "${query_accession}" == \#* ]] && continue
@@ -13,7 +15,11 @@ do
     printf '%s\t%s\t%s\t%s\n' \
         "${subject[3]}" "${mismatches}" "${alignment_length}" "${mismatch_percent}"
 done < "${data_file}" |
+
+# sort by column 4 of the output (mismatch percent) numerically reversed
 sort -t $'\t' -k4,4nr |
+
+#curly brackets to say execute this part all as one
 {
     count=0
     
@@ -27,6 +33,7 @@ sort -t $'\t' -k4,4nr |
             "${count}" "${accession}" "${mismatches}" "${alignment_length}" "${mismatch_percent}"
     done
 } | 
+# pipe to column to make the output headers line up with the data (i have now aliased as tabtab)
 column -t -s $'\t'
 
 

@@ -1,0 +1,8 @@
+# set the group and gene variables
+name="primates_HOXA7"
+group="txid9443[Organism:exp]"
+gene="HOXA7[Gene Name]"
+lower_number_of_genes_allowed=30
+higher_number_of_genes_allowed=600
+winsize=4
+threads=32

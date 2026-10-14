@@ -65,7 +65,7 @@ fi
 
 # plot the conservation chart
 plotcon -sequences aligned.fa -winsize "${winsize}" -graph png -goutfile "${name}" 
-
+# use x11 instead of png to output the chart to the graphics interface rather than save as a file
 
 #-s is true if the file exists and isn't empty
 if [[ ! -s "${name}.1.png" ]]; then

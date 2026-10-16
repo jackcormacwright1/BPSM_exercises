@@ -3,13 +3,9 @@
 #--------------------------------------------------------setup
 source config.txt
 
-mkdir -p "${name}"
-
-cd "${name}"
-
-echo "Running conservation plot pipeline for ${name}"
-
 #--------------------------------------------------------name override
+echo "Initialising conservation plot pipeline..."
+echo
 echo "The name of this run is set to ${name}. Press enter to continue or type to override:"
 read name_override
 
@@ -17,7 +13,11 @@ if [[ ${name_override} != "" ]]; then
         name=${name_override}
 fi
 
-echo "Running with name ${name}."
+mkdir -p "${name}"
+
+cd "${name}"
+
+echo "Running conservation plot pipeline for ${name}"
 
 #--------------------------------------------------------threads override
 echo "Number of threads is set to ${threads}. Press enter to continue or type to override:"

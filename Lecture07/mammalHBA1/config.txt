@@ -1,0 +1,7 @@
+group=txid40674[Organism:exp]
+winsize=4
+name=mammalHBA1
+gene=HBA1[Gene Name]
+higher_number_of_genes_allowed=600
+lower_number_of_genes_allowed=30
+threads=32

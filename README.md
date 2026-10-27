@@ -10,5 +10,7 @@ Added so far:
 - Lecture 05: Bash-only practice with loops and writing files
 - Lecture 06: Processing BLAST HSP output using bash
 - Lecture 07: Pipeline to create a conservation plot with edirect
+- Lecture 08: MySQL scripts to process BLAST output data
+
 
 

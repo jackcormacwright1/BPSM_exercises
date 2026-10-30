@@ -17,7 +17,7 @@ print(f"The coding sequence is: {coding_sequence}")
 coding_length = len(coding_sequence)
 print(f"The length of the coding sequence is: {coding_length}")
 
-coding_percentage = len(coding_sequence) / coding_length
+coding_percentage = coding_length / len(sequence)
 print(f"The percentage of the sequence that is coding is: {coding_percentage:.2%}")
 
 intron = sequence[63:90]

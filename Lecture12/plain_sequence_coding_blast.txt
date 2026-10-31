@@ -1,0 +1,14 @@
+# BLASTX 2.17.0+
+# Query: plain_sequence_coding1 length:63
+# Database: /home/s1306053/BPSM/exercises/Lecture06/nem
+# 0 hits found
+# BLASTX 2.17.0+
+# Query: plain_sequence_coding2 length:45
+# Database: /home/s1306053/BPSM/exercises/Lecture06/nem
+# Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
+# 4 hits found
+plain_sequence_coding2	gi|373218841|emb|CCD63632.1|	66.667	9	3	0	19	45	46	54	5.3	22.3
+plain_sequence_coding2	gi|373218840|emb|CCD63631.1|	66.667	9	3	0	19	45	20	28	5.4	22.3
+plain_sequence_coding2	gi|324506136|gb|ADY42628.1|	53.333	15	7	0	1	45	136	150	7.2	21.9
+plain_sequence_coding2	gi|341886813|gb|EGT42748.1|	50.000	14	7	0	3	44	70	83	9.7	21.6
+# BLAST processed 2 queries

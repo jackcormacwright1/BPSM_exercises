@@ -1,0 +1,5 @@
+# BLASTX 2.17.0+
+# Query: plain_sequence_noncoding1 length:27
+# Database: /home/s1306053/BPSM/exercises/Lecture06/nem
+# 0 hits found
+# BLAST processed 1 queries

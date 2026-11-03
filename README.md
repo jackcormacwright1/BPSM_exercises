@@ -15,7 +15,7 @@ Added so far:
 - Lecture 10: Class Test (no commits)
 - Lecture 11: Using python to process text
 - Lecture 12: Using python to process files
-
+- Lecture 13: Further python exercises with loops
 
 
 

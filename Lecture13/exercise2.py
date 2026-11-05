@@ -12,6 +12,17 @@
 
 #================================================================             
 
+# inputs - genomic_data2.txt file, exons.txt file
+# process
+# 1 - open and read the genomic data file
+# 2 - loop the lines of the exon file
+# 3 - get the start and end positions from the line
+# 4 - convert to integers
+# 5 - slice the genomic dna and concatenate a string
+# 6 - write to a new file
+# 7 - print success message and start of the new file
+# outputs - extracted exons file and message to screen
+
 # Read the genomic DNA sequence                                               
 with open("Lecture13/genomic_dna2.txt", "r") as file:                       
     dna = file.read()                                       

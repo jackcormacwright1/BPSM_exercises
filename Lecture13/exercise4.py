@@ -9,7 +9,27 @@
 
 #===================================================================
 
+# inputs - dna files, user choice of which one to split
+# process
+# 1 - get the names of the files in the target directory into a list
+# 2 - loop each file
+# 3 - if it ends with .dna store it as viable
+# 4 - ensure more than 0 files were found
+# 5 - for each file check if it was already processed (i.e. a folder already exists)
+# 6 - print the files and whether they have been processed
+# 7 - ask for input of which one you want to process
+# 8 - if it has already been processed ask if you want to overwrite
+# 9 - create the directory for the files
+# 10 - loop a range from 100 to 1000 stepping by 100 and create the sub folders
+# 11 - open the selected dna file and loop the lines
+# 12 - calculate the length and floor divide by 100 to get which folder it belongs in
+# 13 - open a file for the sequence and write the line
+# 14 - output a message about what what processed
+# outputs - message to screen, main folder for the input, folders for the sizes, one file per sequence (line) in the correct folder
+
 import os
+
+os.chdir("/home/s1306053/BPSM/exercises/Lecture13")
 
 # Directory containing the original DNA files
 directory = "/localdisk/data/BPSM/Lecture13/"
@@ -26,6 +46,8 @@ for filename in all_files:
 
     # Check whether the filename ends in .dna
     if filename.endswith(".dna"):
+    #in case if statements are not allowed yet 
+    # dna_files = sorted(directory.glob("*.dna"))
 
         # Add the filename to our list
         dna_files.append(filename)
@@ -106,24 +128,21 @@ with open(input_file, "r") as file:
         sequence = line.strip()
         length = len(sequence)
 
-        # Only process sequences between 100 and 999 bases
-        if 100 <= length <= 999:
+        # Determine the correct size range
+        # // for floor division 
+        lower = (length // 100) * 100
+        folder = f"{lower}-{lower + 99}"
 
-            # Determine the correct size range
-            # // for floor division 
-            lower = (length // 100) * 100
-            folder = f"{lower}-{lower + 99}"
+        # Construct the output path
+        output_folder = os.path.join(folder_name, folder)
+        output_filename = f"sequence_{number}.dna"
+        output_path = os.path.join(output_folder, output_filename)
 
-            # Construct the output path
-            output_folder = os.path.join(folder_name, folder)
-            output_filename = f"sequence_{number}.dna"
-            output_path = os.path.join(output_folder, output_filename)
+        # Write the sequence to its own file
+        with open(output_path, "w") as output:
+            output.write(sequence + "\n")
 
-            # Write the sequence to its own file
-            with open(output_path, "w") as output:
-                output.write(sequence + "\n")
-
-            processed += 1
+        processed += 1
 
 print(f"\nFinished processing {filename}")
 print(f"Sequences saved: {processed}")

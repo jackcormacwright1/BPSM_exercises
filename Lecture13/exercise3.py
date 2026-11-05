@@ -13,6 +13,21 @@
 
 #===============================================================
 
+# inputs - dna sequence from previous lecture, output directory path, window size, step size
+# process
+# 1 - create the output directory
+# 2 - read in the fasta
+# 3 - open a new file to take the combined output
+# 4 - loop a range from 0 to the dna length counting up by the step size
+# 5 - slice the dna at the start positions to start + window length
+# 6 - calculate gc percentage
+# 7 - create fasta header for the window
+# 8 - print the sequence and gc content
+# 9 - write the header and segment to an individual file
+# 10 - write the header and segment to the combined file
+# loop
+# outputs - message to the screen, individual files, combined file, folder
+
 import os
 
 # Set output directory as this will produce a lot of files

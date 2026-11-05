@@ -13,6 +13,21 @@
 
 #==========================================================
 
+# inputs - input.txt file, 14 chars in the adapter
+# process
+# 1 - open the input file
+# 2 - loop each sequence (line)
+# 3 - trim the sequence
+# 4 - append to a list
+# 5 - calculate and print length
+# 6 - close the file
+# 7 - open a new file for the trimmed sequences
+# 8 - loop the list and write
+# 9 - close the file
+# outputs - a file with the trimmed sequences
+
+
+
 # Initialise a counter and an empty list to store trimmed sequences
 count = 0
 trimmed_sequences = list()

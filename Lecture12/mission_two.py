@@ -1,6 +1,8 @@
 #!/bin/python3
 
-import subprocess
+import subprocess, os
+
+os.chdir("/home/s1306053/BPSM/exercises/Lecture12")
 
 database = "/home/s1306053/BPSM/exercises/Lecture06/nem"
 

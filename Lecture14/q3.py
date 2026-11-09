@@ -12,7 +12,11 @@
 
 ################################################################
 
-sequences = ['ATTGTACGG', 'AATGAACCG', 'AATGAACCC', 'AATGGGAAT']
+import os
+
+os.chdir("/localdisk/home/s1306053/BPSM/exercises/Lecture14")
+
+sequences = ['ATTGTACGGGGG', 'AATGAACCGGG', 'AATGAACCC', 'AATGGGAAT']
 n = len(sequences)
 
 #loop all pairs of sequences
@@ -31,11 +35,25 @@ for i in range(n):
         for k in range(min_len):
             if seq1[k] == seq2[k]:
                 identical += 1
-        
+
+        if len(seq1) > len(seq2):
+            denominator_message = f"length of sequence {i + 1} (the longer sequence)"
+        elif len(seq2) > len(seq1):
+            denominator_message = f"length of sequence {j + 1} (the longer sequence)"
+        else:
+            denominator_message = f"length of either sequence (both have equal length)"
+
         #work out the % identical of the longer sequence
         max_len = max(len(seq1), len(seq2))
-        percentage = (identical / max_len) * 100
-        print(f"Pair ({i+1}, {j+1}): {percentage:.1f}% identical (% of the longer sequence - s1={len(seq1)}, s2={len(seq2)})")
+        
+        #test for a divide by zero error
+        try:
+            percentage = (identical / max_len) * 100
+        except ZeroDivisionError:
+            print(f"Pair ({i+1}, {j+1}): both sequences are empty")
+        else:
+            print(f"Pair ({i+1}, {j+1}): {percentage:.1f}% identical")
+            print(f"(denominator = {denominator_message}, {max_len})\n")
 
 
 

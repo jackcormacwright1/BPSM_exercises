@@ -9,23 +9,39 @@
 
 ########################################################################
 
+import os
+
+os.chdir("/localdisk/home/s1306053/BPSM/exercises/Lecture14")
+
 dna = "ATGCCGCACCGCCATTTTTTTGCCGATATTATGCATTATGGCCCGTCATCCGGATG"
 k = 3   # k-mer size
 n = 2   # report kmers occurring more than n times
 o = 1   # offset
 
-kmers = []
+#check the input values are ok
+if k <= 0:
+    raise ValueError("The k-mer size must be greater than zero.")
+if o <= 0:
+    raise ValueError("The offset must be greater than zero.")
+if n < 0:
+    raise ValueError("The occurrence threshold cannot be negative.")
 
-# Generate kmers
+kmers = []
+#generate kmers counting from the start up to the final start position (length of sequence minus 1 kmer length)
 for start in range(0, len(dna) - k + 1, o):
     kmer = dna[start:start + k]
     kmers.append(kmer)
 
-# Unique kmers
-kmer_set = set(kmers)
-kmer_counts = []
+#build a list of the unique kmers so it remains ordered
+unique_kmers = []
+for kmer in kmers:
+    if kmer not in unique_kmers:
+        unique_kmers.append(kmer)
 
-# Count occurrences
+kmer_counts = []
+#count occurrences into a list and print out the counts
+#the lists are ordered so the index of the unique kmers can
+#be used to look up the counts later without a dictionary
 for kmer in kmer_set:
     count = kmers.count(kmer)
     kmer_counts.append(count)

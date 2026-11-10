@@ -42,7 +42,7 @@ kmer_counts = []
 #count occurrences into a list and print out the counts
 #the lists are ordered so the index of the unique kmers can
 #be used to look up the counts later without a dictionary
-for kmer in kmer_set:
+for kmer in unique_kmers:
     count = kmers.count(kmer)
     kmer_counts.append(count)
     if count > n:

@@ -10,6 +10,21 @@
 ################################################################################
 
 
+#===================================
+#changes made from the original functions:
+# 1. import getpass and get the input from the user at runtime
+# 2. call the function to display tables and get the table choice
+# 3. modify the try except into a second function
+#    which takes password and table name
+# 4. exit the second function if no table is selected
+# 5. remove the hard coded table name blasthits
+# 6. call the second function, passing the table name returned by the first
+# 7. remove the duplicate SHOW TABLES from the second function
+# 8. change the database to my username (remove _exercises)
+# 9. adjust formatting of imports to separate standard imports from 3rd party
+#    this was directed by the linter
+#===================================
+
 import os
 from getpass import getpass
 

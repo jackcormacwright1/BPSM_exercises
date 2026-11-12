@@ -19,7 +19,10 @@
 ################################################################################################
 
 
-def amino_acid_percentages(protein, residues=["A", "I", "L", "M", "F", "W", "Y", "V"]):
+def amino_acid_percentages(protein, residues=None):
+    if residues is None:
+        residues = ["A", "I", "L", "M", "F", "W", "Y", "V"]
+
     protein = protein.upper()
     if len(protein) == 0:
         raise ValueError("The protein sequence is empty!!!!!!!")

@@ -32,10 +32,10 @@ def amino_acid_percentage(protein, residue):
 
 
 if __name__ == "__main__":
-    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "M")) == round(5)
-    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "r")) == round(10)
-    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "L")) == round(50)
-    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "Y")) == round(0)
+    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "M")) == 5
+    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "r")) == 10
+    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "L")) == 50
+    assert round(amino_acid_percentage("MSRSLLLRFLLFLLLLPPLP", "Y")) == 0
 
     print("Tests complete")
 

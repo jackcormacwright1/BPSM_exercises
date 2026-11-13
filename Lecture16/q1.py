@@ -28,19 +28,15 @@ def get_answers(questions):
 
     return answers
 
+questions = {
+    "name": "What's your name?",
+    "age": "How old are you?",
+    "colour": "What is your favourite colour?",
+    "python": "Do you like Python?",
+    "flat_earth": "The world is flat: True or False?"
+}
 
-def ask_questions():
-    questions = {
-        "name": "What's your name?",
-        "age": "How old are you?",
-        "colour": "What is your favourite colour?",
-        "python": "Do you like Python?",
-        "flat_earth": "The world is flat: True or False?"
-    }
-
-    return get_answers(questions)
-
-answers = ask_questions()
+answers = get_answers(questions)
 
 print()
 print(f"hello {answers['name']}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -60,3 +56,12 @@ elif answers["flat_earth"].lower() == "true":
     print("meet u over the ice wall brotherrr!!!!!!!!!!!!!")
 else:
     print("its true or false numpty...")
+
+
+
+
+
+
+
+
+

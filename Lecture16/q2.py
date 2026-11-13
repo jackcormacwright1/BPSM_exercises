@@ -15,7 +15,7 @@
 
 ######################################################################
 
-
+# input - codon usage table
 gencode = {
 'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
 'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
@@ -36,7 +36,26 @@ gencode = {
 
 
 
+#translate the sequence into proteins
 def translate(sequence, frame, genetic_code):
+    '''
+    this function translates a DNA sequence into a protein amino acid residue string
+
+    it takes as argumemts:
+        sequence = the dna sequence (string)
+        frame = the number start position of the frame (int)
+        genetic_code = the translation dictionary between DNA codons and amino acid residue codes (dictionary)
+
+    steps:
+        1. initialise an empty string to store the protein sequence
+        2. loop the sequence start positions based on the frame up to the last complete codon
+        3. slice the codon out of the sequence
+        4. use .get to look up the amino acid value using the codon as the key
+            and replace with X if not found
+        5. append the amino acid to the protein string
+        6. return the protein string
+
+    '''
     protein = ""
 
     #move three bases at a time stopping before an incomplete codon
@@ -49,6 +68,21 @@ def translate(sequence, frame, genetic_code):
 
 
 def reverse_complement(sequence):
+    '''
+    this function converts a DNA sequence to its complement
+
+    it takes as arguments:
+        sequence = the dna sequence (string)
+
+    steps:
+        1. initialise a dictionary mapping nucleotide codes to their complement codes
+        2. initialise a string to store the reversed DNA string (complement)
+        3. loop the whole sequence stepping from the end backwards one character at a time
+        4. use .get to look up the complementary base from the dictionary
+        5. append to the reverse strand string
+        6. return the reverse strand string
+
+    '''
     complements = {
         "A": "T",
         "T": "A",
@@ -64,16 +98,20 @@ def reverse_complement(sequence):
     return reverse_strand
 
 
+# get a user input dna sequence and quality control to remove spaces and convert all to upper case
 dna = input("Enter a DNA sequence: ")
 dna = "".join(dna.split()).upper()
 
+# get the reverse complementary string of the input sequence
 reverse_dna = reverse_complement(dna)
 
 print("\nForward frames")
+# loop the 3 frames and translate to protein + print
 for frame in range(3):
     protein = translate(dna, frame, gencode)
     print(f"+{frame + 1}: {protein}")
 
+# loop the 3 frames on the reversed dna and translate + print
 print("\nReverse frames")
 for frame in range(3):
     protein = translate(reverse_dna, frame, gencode)

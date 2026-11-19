@@ -16,10 +16,13 @@ df = pd.read_csv(file_path, sep="\t", na_values="-")
 # add a new column called species which is the first 2 whitespace delimited strings from the organism name column
 df["Species"] = df["#Organism/Name"].str.split().str[:2].str.join(" ")
 
-
+#add a column for the number of proteins per gene
 df["Proteins per gene"] = df["Proteins"] / df["Genes"]
+#filter the dataframe for proteins per gene more than 1.1 i.e. 10%+ more proteins than genes
+#this is possible due to alternative splicing - introns mean the exons can combine in different ways to create different proteins
 more_proteins = (df[df["Proteins per gene"] >= 1.1].sort_values("Proteins per gene", ascending=False))
 
+#return an informative subset of columns and fix the datatypes and rounding
 cols = ["#Organism/Name", "Group", "Assembly Accession", "Genes", "Proteins", "Proteins per gene"]
 q5 = more_proteins[cols].astype({"Genes": int, "Proteins": int}).round({"Proteins per gene": 3})
 

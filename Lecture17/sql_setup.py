@@ -19,7 +19,7 @@ password = os.environ.get("MySQL_password")
 
 df = pd.read_csv(file_path, sep="\t", na_values="-")
 
-# Rename the columns
+#rename the columns to align with MySQL requirements and be easier to type
 df = df.rename(columns={
     "#Organism/Name": "organism",
     "TaxID": "taxid",

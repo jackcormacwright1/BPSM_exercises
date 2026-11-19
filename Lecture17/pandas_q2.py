@@ -16,6 +16,7 @@ df = pd.read_csv(file_path, sep="\t", na_values="-")
 # add a new column called species which is the first 2 whitespace delimited strings from the organism name column
 df["Species"] = df["#Organism/Name"].str.split().str[:2].str.join(" ")
 
+#how many of each is ambiguous - count the number of assemblies and number of species
 q2 = (df.groupby("Group")
         .agg(assemblies=("#Organism/Name", "size"),
              species=("Species", "nunique")

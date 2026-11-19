@@ -14,6 +14,9 @@ python ./sql_setup.py
 cat ./sql_q1_4.py
 python ./sql_q1-4.py
 
+cat ./sql_q5.py
+python ./sql_q5.py
+
 unset MySQL_password
 
 deactivate

@@ -1,0 +1,263 @@
+REGEX CHEAT SHEET
+Python re first; grep / sed / awk / nvim differences at the end.
+Search this file in nvim with /  (e.g. /LOOKAROUND), n = next, N = previous.
+
+-------------------------------------------------------------------------------
+READING A PATTERN: WORKED EXAMPLE
+-------------------------------------------------------------------------------
+r"^[xy].*e$"   on "xjhd53e"
+
+  r"..."   raw string: Python leaves the backslashes alone
+  ^        must be at the START of the string
+  [xy]     one character: x or y            -> "x"
+  .*       any characters, 0 or more        -> "jhd53"
+  e        a literal e                      -> "e"
+  $        must now be at the END           -> yes, so it matches
+
+-------------------------------------------------------------------------------
+PYTHON re FUNCTIONS          (import re;  re = regular expressions)
+-------------------------------------------------------------------------------
+re.search(p, s)       first match ANYWHERE in s -> Match object or None
+re.match(p, s)        match only at the START of s
+re.fullmatch(p, s)    the WHOLE of s must match
+re.findall(p, s)      list of every matching string
+                      (if p has groups: list of the groups instead)
+re.finditer(p, s)     iterator of Match objects - use when you need positions
+re.sub(p, r, s)       substitute: replace every match of p with r
+re.split(p, s)        split s wherever p matches
+re.compile(p)         build once, reuse:  rx = re.compile(p); rx.search(s)
+
+Match object  m = re.search(r"d(.)e", "hedle3455")
+  m.group()   or m.group(0)   whole match           -> "dle"
+  m.group(1)                  first (...) group     -> "l"
+  m.groups()                  tuple of all groups   -> ("l",)
+  m.start()  m.end()          start, end (end is EXCLUSIVE) -> 2, 5
+  m.span()                    (start, end)          -> (2, 5)
+
+  if m:      a Match counts as True, None counts as False
+  "hedle3455"[2:5] == "dle"   start/end slot straight into slicing
+
+ALWAYS use raw strings: r"\d+"
+  Without r, Python processes backslashes first:
+  "\1" becomes chr(1) and "\b" becomes a backspace character - silent bugs.
+
+-------------------------------------------------------------------------------
+SINGLE CHARACTERS
+-------------------------------------------------------------------------------
+.      any character except newline (re.S makes it match newline too)
+\d     Digit                  [0-9]
+\w     Word character         [A-Za-z0-9_]
+\s     whitespace (Space)     space, tab \t, newline \n, \r, \f, \v
+\D \W \S                      UPPERCASE = the opposite (NOT digit, etc.)
+\t \n                         tab, newline
+\.                            a literal dot (backslash = "take it literally")
+
+-------------------------------------------------------------------------------
+CHARACTER CLASSES            (exactly ONE character from a set)
+-------------------------------------------------------------------------------
+[de]          d or e
+[a-z]         any lowercase letter (a range)
+[A-Za-z0-9]   ranges can be combined
+[^de]         any ONE character that is NOT d or e
+              (^ as the FIRST thing inside [] means NOT)
+[.?*]         inside [] most special characters are literal
+[-az] [az-]   a literal hyphen goes first or last
+[\d\s]        shorthands work inside []
+
+-------------------------------------------------------------------------------
+QUANTIFIERS                  (how many of the ONE thing just before)
+-------------------------------------------------------------------------------
+*         0 or more
++         1 or more
+?         0 or 1 (optional)
+{3}       exactly 3
+{3,}      3 or more
+{3,5}     3 to 5
+{,5}      0 to 5
+
+ab+       a then one or more b        "abbb"
+(ab)+     "ab" repeated               "ababab"
+
+GREEDY by default: grabs as much as possible, gives back only if forced.
+Add ? to make it LAZY (as little as possible):  *?  +?  ??  {3,5}?
+  on "dxexe":   d.*e  -> "dxexe"      d.*?e -> "dxe"
+
+-------------------------------------------------------------------------------
+ANCHORS                      (match a POSITION, not a character)
+-------------------------------------------------------------------------------
+^      start of string     (start of every line with re.M)
+$      end of string       (end of every line with re.M)
+       note: $ also matches just before a final "\n"
+\A     start of string only, whatever the flags
+\Z     end of string only, whatever the flags
+\b     word Boundary (between a \w and a \W, or string edge)
+\B     NOT a word boundary
+  r"\bcat\b"  matches "the cat sat", not "concat"
+
+-------------------------------------------------------------------------------
+GROUPS, ALTERNATION, BACKREFERENCES
+-------------------------------------------------------------------------------
+a|b            a OR b. Splits the WHOLE pattern (or the group it sits in):
+               ^a|b$  means  (^a) or (b$),  NOT  ^(a|b)$
+gr(a|e)y       gray or grey
+(...)          capture group: groups things AND remembers the text
+(?:...)        non-capturing group: groups only, remembers nothing
+(?P<name>...)  named group, read back with m.group("name")
+\1  \2         backreference: EXACTLY the text group 1 / 2 captured
+                 r"(\w)\1"  doubled letter -> "ll" in "hello"
+(?P=name)      backreference to a named group
+
+In re.sub replacements:  \1   \g<1>   \g<name>
+  re.sub(r"(\w+) (\w+)", r"\2 \1", "hello world")   -> "world hello"
+
+-------------------------------------------------------------------------------
+LOOKAROUNDS                  (check what's there WITHOUT consuming it)
+-------------------------------------------------------------------------------
+(?=...)    positive lookahead    what FOLLOWS must match
+(?!...)    negative lookahead    what FOLLOWS must NOT match
+(?<=...)   positive lookbehind   what PRECEDES must match
+(?<!...)   negative lookbehind   what PRECEDES must NOT match
+Lookbehinds must be fixed width in Python: (?<=ab) ok, (?<=a+) error.
+
+r"\d+(?= bp)"     digits followed by " bp"; " bp" not in the match
+r"(?<=>)\S+"      text straight after ">" (FASTA header ID)
+r"(?=(ATA))"      OVERLAPPING matches: findall on "ATATA" -> ["ATA","ATA"]
+r"(\d).*(?!\1)(\d).*(?!\1|\2)\d"     three DIFFERENT digits anywhere
+
+-------------------------------------------------------------------------------
+FLAGS
+-------------------------------------------------------------------------------
+re.I   re.IGNORECASE   case-insensitive
+re.M   re.MULTILINE    ^ and $ match at every line
+re.S   re.DOTALL       . also matches newline
+re.X   re.VERBOSE      spaces ignored, # comments allowed in the pattern
+re.A   re.ASCII        \d \w \s match ASCII only
+Combine with |:        re.search(p, s, re.I | re.M)
+Or inline at start:    r"(?i)atg"
+
+-------------------------------------------------------------------------------
+SPECIAL CHARACTERS           (put \ in front to match them literally)
+-------------------------------------------------------------------------------
+.  ^  $  *  +  ?  {  }  [  ]  \  |  (  )
+re.escape(s)   escapes a whole string for you
+
+-------------------------------------------------------------------------------
+BIOLOGY RECIPES
+-------------------------------------------------------------------------------
+r"^[ACGT]+$"                  string is pure DNA
+r"[^ACGTN]"                   find any non-DNA character
+r"^ATG"                       starts with a start codon
+r"(?:TAA|TAG|TGA)$"           ends with a stop codon
+r"ATG(?:[ACGT]{3})*?(?:TAA|TAG|TGA)"
+                              ATG to the first IN-FRAME stop codon
+r"([ACGT])\1{4,}"             homopolymer: same base 5+ times in a row
+r"(?:AT){3,}"                 ATATAT... dinucleotide repeat, 3+ copies
+r"^>(\S+)"                    FASTA header: capture ID up to first space
+r"[A-Z]{2}_\d+(?:\.\d+)?"     RefSeq-style accession, e.g. NM_000546.6
+r"-?\d+(?:\.\d+)?"            integer or decimal, optionally negative
+
+GC content:   len(re.findall(r"[GC]", seq)) / len(seq)
+Clean a sequence read from a file:   seq = re.sub(r"\s", "", seq).upper()
+
+Restriction digest (site as regex, offset = bases before the cut *):
+  cuts = [m.start() + offset for m in re.finditer("(?=" + site + ")", seq)]
+  bounds = [0] + sorted(set(cuts)) + [len(seq)]
+  frags  = [seq[a:b] for a, b in zip(bounds, bounds[1:])]
+
+IUPAC CODES -> REGEX
+  N  aNy          [ACGT]
+  R  puRine       [AG]
+  Y  pYrimidine   [CT]
+  W  Weak         [AT]     (2 H-bonds)
+  S  Strong       [GC]     (3 H-bonds)
+  K  Keto         [GT]
+  M  aMino        [AC]
+  B  not A        [CGT]    B D H V = the letter AFTER the missing base:
+  D  not C        [AGT]      A->B, C->D, G->H, T(U)->V
+  H  not G        [ACT]
+  V  not T        [ACG]
+
+-------------------------------------------------------------------------------
+GOTCHAS
+-------------------------------------------------------------------------------
+- No r"" prefix: "\1" is chr(1), "\b" is backspace. Fails silently.
+- re.match only checks the START. For "contains", use re.search.
+- findall with groups returns the GROUPS, not the whole match.
+  Use (?:...) for grouping, or finditer + m.group().
+- findall/finditer skip OVERLAPPING matches. Use (?=(...)) to catch them.
+- . does not match \n. Strip newlines from sequences before searching.
+- $ matches before a trailing "\n": strip() lines read from files.
+- ^ means START outside [], but NOT as the first thing inside [].
+- Greedy .* overshoots. Use .*? or a negated class like [^>]*.
+- A quantifier applies to ONE thing: ab+ is not (ab)+.
+
+-------------------------------------------------------------------------------
+OUTSIDE PYTHON: grep / sed / awk
+-------------------------------------------------------------------------------
+Three flavours:
+  BRE   Basic Regular Expressions      grep, sed (default)
+  ERE   Extended Regular Expressions   grep -E, sed -E, awk
+  PCRE  Perl-Compatible (~ Python)     grep -P
+
+In BRE these need a backslash to be special:  \+ \? \| \( \) \{ \}
+In ERE they work as in Python:                 +  ?  |  (  )  {  }
+
+NO \d in BRE/ERE. Use [0-9] or [[:digit:]].
+(\w and \s do work as GNU extensions in grep and sed.)
+NO lookarounds, NO lazy *? in BRE/ERE.
+
+POSIX classes (go INSIDE brackets, so double brackets):
+  [[:digit:]]  [[:alpha:]]  [[:alnum:]]  [[:space:]]  [[:upper:]]  [[:lower:]]
+
+grep  (Global Regular Expression Print: prints matching LINES)
+  grep -E 'p' f     Extended syntax
+  grep -P 'p' f     Perl syntax: \d, lookarounds, lazy (GNU grep only)
+  grep -o           Only print the matching part, one per line
+  grep -c           Count matching lines
+  grep -v           inVert: lines that do NOT match
+  grep -i           Ignore case
+  grep -n           show line Numbers
+  grep -w           Whole-word matches only
+  e.g.  grep -c '^>' seqs.fasta            number of FASTA records
+        grep -oE '[0-9]{3,}' f              runs of 3+ digits
+
+sed  (Stream EDitor)
+  sed 's/p/r/'      Substitute the first match on each line
+  sed 's/p/r/g'     Global: every match on each line
+  sed -E            use ERE instead of BRE
+  &                 in the replacement = the whole match
+  \1 \2             backreferences in the replacement
+  sed -n '/p/p'     print only matching lines (-n = no auto-print)
+  e.g.  sed -E 's/([0-9]+)bp/\1 bp/g' f
+        sed 's/^>/>sample1_/' seqs.fasta     prefix every header
+
+awk  (Aho, Weinberger, Kernighan: its authors)  uses ERE
+  awk '/p/' f                 lines matching p
+  awk '$2 ~ /p/' f            field 2 matches p     (~ = "matches")
+  awk '$2 !~ /p/' f           field 2 does NOT match p
+  gsub(/p/, "r")              Global SUBstitute in $0 (returns count)
+  sub(/p/, "r", $3)           first match only, in field 3
+  match(s, /p/)               sets RSTART (start, 1-based) and RLENGTH
+  No \d, no backreferences, no lookarounds.
+  e.g.  awk -F'\t' '$1 ~ /^chr[0-9]+$/' f.bed
+        awk '/^>/ {n++} END {print n}' seqs.fasta
+
+-------------------------------------------------------------------------------
+NVIM'S OWN REGEX             (/ search and :s substitute)
+-------------------------------------------------------------------------------
+/p                search forward;  n next,  N previous
+:%s/p/r/g         Substitute in every line (% = whole file, g = all on line)
+:%s/p/r/gc        ...Confirming each one (c)
+:noh              NO Highlight: clear search highlighting
+
+Default "magic" mode: these need a backslash to be special:
+  \+  \=  (0 or 1, like ?)  \|  \(  \)  \{3,5}
+\v at the start = "very magic": behaves like Python/ERE:
+  /\v(ATG|GTG)[ACGT]{3}
+\d \w \s work as in Python.
+\< \>             word start / word end (like \b)
+\{-}              lazy "as few as possible":  .\{-}  is like .*?
+\c                anywhere in the pattern = ignore case
+\zs \ze           set where the match Starts / Ends (lookaround-ish)
+e.g.  :%s/\v(\w+) (\w+)/\2 \1/g      swap two words on every line
+:help pattern     full documentation
